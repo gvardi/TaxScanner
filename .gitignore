@@ -1,0 +1,52 @@
+# Build outputs
+bin/
+obj/
+out/
+build/
+dist/
+
+# IDE / editor files
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Environment / secrets
+.env
+.env.*
+*.pfx
+*.key
+appsettings.Development.json
+
+# NuGet / packages
+packages/
+*.nupkg
+project.lock.json
+
+# Node (if applicable)
+node_modules/
+npm-debug.log*
+
+# Python (if applicable)
+__pycache__/
+*.py[cod]
+*.egg-info/
+venv/
+.venv/
+
+# Test results
+TestResults/
+coverage/
