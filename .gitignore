@@ -50,3 +50,9 @@ venv/
 # Test results
 TestResults/
 coverage/
+
+# TaxScanner
+credentials.json
+token.json
+.cache/
+reports/

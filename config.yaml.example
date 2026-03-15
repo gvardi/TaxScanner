@@ -1,0 +1,54 @@
+# TaxScanner Configuration
+
+businesses:
+  - name: "Real Estate"
+    code: "RE"
+    description: >
+      Real estate investment and property management business.
+      Includes rental properties, property maintenance, repairs,
+      insurance, utilities, and related expenses.
+
+  - name: "Software/IT"
+    code: "SW"
+    description: >
+      Software development and IT consulting business.
+      Includes cloud hosting, software subscriptions, development tools,
+      hardware, professional services, and related expenses.
+
+# Expense categories for classification
+categories:
+  - "Software & Subscriptions"
+  - "Cloud & Hosting"
+  - "Office Supplies"
+  - "Equipment & Hardware"
+  - "Professional Services"
+  - "Property Maintenance & Repairs"
+  - "Property Insurance"
+  - "Utilities"
+  - "Travel & Transportation"
+  - "Advertising & Marketing"
+  - "Education & Training"
+  - "Meals"
+  - "Other"
+
+# Gmail search settings
+gmail:
+  # Max results per search query
+  max_results: 500
+  # Batch size for fetching messages
+  batch_size: 50
+
+# Claude AI settings
+classifier:
+  # Model to use for classification
+  model: "claude-sonnet-4-20250514"
+  # Model to use for vision/OCR
+  vision_model: "claude-sonnet-4-20250514"
+  # Number of invoices per classification batch
+  batch_size: 10
+  # Max tokens for classification response
+  max_tokens: 4096
+
+# Report settings
+report:
+  output_dir: "reports"
