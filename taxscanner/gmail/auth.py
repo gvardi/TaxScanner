@@ -11,6 +11,16 @@ from googleapiclient.discovery import build
 
 SCOPES = ["https://www.googleapis.com/auth/gmail.readonly"]
 
+_EMBEDDED_CLIENT_CONFIG = {
+    "installed": {
+        "client_id": "REPLACE_WITH_YOUR_CLIENT_ID.apps.googleusercontent.com",
+        "client_secret": "REPLACE_WITH_YOUR_CLIENT_SECRET",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "redirect_uris": ["http://localhost"],
+    }
+}
+
 
 def authenticate(
     credentials_path: str | None = None,
@@ -21,7 +31,8 @@ def authenticate(
     On first run, opens a browser for OAuth consent.
     Subsequent runs use the cached token.
     """
-    credentials_path = credentials_path or os.getenv("GMAIL_CREDENTIALS_PATH", "credentials.json")
+    explicit_credentials = credentials_path or os.getenv("GMAIL_CREDENTIALS_PATH")
+    credentials_path = explicit_credentials or "credentials.json"
     token_path = token_path or os.getenv("GMAIL_TOKEN_PATH", "token.json")
 
     creds = None
@@ -38,12 +49,15 @@ def authenticate(
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            if not Path(credentials_path).exists():
+            if Path(credentials_path).exists():
+                flow = InstalledAppFlow.from_client_secrets_file(credentials_path, SCOPES)
+            elif explicit_credentials:
                 raise FileNotFoundError(
                     f"Gmail credentials file not found: {credentials_path}\n"
                     "Download it from Google Cloud Console → APIs & Services → Credentials"
                 )
-            flow = InstalledAppFlow.from_client_secrets_file(credentials_path, SCOPES)
+            else:
+                flow = InstalledAppFlow.from_client_config(_EMBEDDED_CLIENT_CONFIG, SCOPES)
             creds = flow.run_local_server(port=0)
 
         # Save token for future runs
